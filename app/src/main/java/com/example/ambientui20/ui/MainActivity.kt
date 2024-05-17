@@ -1,9 +1,7 @@
-@file:OptIn(ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
 
-package com.example.ambientui20
+package com.example.ambientui20.ui
 
-import android.content.Intent.ShortcutIconResource
-import android.graphics.drawable.Icon
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -15,8 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.ambientui20.ui.theme.AmbientUI20Theme
-import androidx.appcompat.app.AppCompatActivity
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -27,27 +23,34 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.PlayArrow
+import androidx.compose.material.icons.outlined.PlayArrow
+import androidx.compose.material.icons.rounded.ArrowBack
+import androidx.compose.material.icons.rounded.Call
+import androidx.compose.material.icons.rounded.Favorite
+import androidx.compose.material.icons.rounded.Info
+import androidx.compose.material.icons.rounded.LocationOn
+import androidx.compose.material.icons.rounded.PlayArrow
+import androidx.compose.material.icons.rounded.Search
+import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.TopAppBar
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.modifier.modifierLocalConsumer
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.google.android.material.appbar.MaterialToolbar
+import com.example.ambientui20.R
+import project.cod3me.components.*
+
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,14 +72,44 @@ class MainActivity : ComponentActivity() {
 }
 
 @Composable
-fun App(modifier: Modifier = Modifier) {
+fun App(){
+    Scaffold(
+        topBar = {
+            AmbTopBar(
+                title = stringResource(id = R.string.app_name),
+                actions = {
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(imageVector = Icons.Rounded.PlayArrow, contentDescription = "Start")
+                    }
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(imageVector = Icons.Rounded.Favorite, contentDescription = "Buy Pro")
+                    }
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(imageVector = Icons.Rounded.Info, contentDescription = "Info")
+                    }
+                    IconButton(onClick = { /*TODO*/ }) {
+                        Icon(imageVector = Icons.Rounded.Settings, contentDescription = "Settings")
+                    }
+                },
+                colors = TopAppBarDefaults.topAppBarColors(
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer
+                )
+            )
+        }
+    ) { innerPadding ->
+        ScreenContent(modifier = Modifier.padding(innerPadding))
+    }
+}
 
+
+@Composable
+fun ScreenContent(modifier: Modifier = Modifier) {
     // Divide the screen into equal halves
-
     Row (
-        modifier = Modifier,
+        modifier = Modifier
+            .padding(top = 25.dp),
 
-        //verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically
 
     ) {
 
@@ -89,7 +122,7 @@ fun App(modifier: Modifier = Modifier) {
                     start = 20.dp,
                     end = 20.dp,
                     top = 40.dp,
-                    bottom = 40.dp
+                    bottom = 20.dp
                 )
                 .fillMaxHeight(),
 
@@ -98,13 +131,13 @@ fun App(modifier: Modifier = Modifier) {
         ) {
             item {
                 Text(text = "")
-                ModeButton(name = "Ambient (Edges)", icon = com.google.android.material.R.drawable.ic_arrow_back_black_24)
+                ModeButton("Ambient (Edges)", rememberEdgesensorLow())
                 Text(text = "")
-                ModeButton(name = "Ambilight", icon = com.google.android.material.R.drawable.ic_search_black_24)
+                ModeButton("Ambilight", rememberSurroundSound())
                 Text(text = "")
-                ModeButton(name = "Rainbow", icon = androidx.core.R.drawable.ic_call_answer,)
+                ModeButton("Rainbow", Icons.Rounded.Call)
                 Text(text = "")
-                ModeButton(name = "Boy", icon = androidx.core.R.drawable.ic_call_decline,)
+                ModeButton("Reverse Rainbow",Icons.Rounded.LocationOn)
             }
 
         }
@@ -141,11 +174,12 @@ fun App(modifier: Modifier = Modifier) {
 @Composable
 fun ModeButton(
     name: String,
-    icon: Int,
+    icon: ImageVector,
+    contentDescription: String = ""
 ){
     Button(
         modifier = Modifier
-            .height(60.dp)
+            .height(50.dp)
             .width(400.dp)
             .padding(top = 0.dp),
 
@@ -154,14 +188,14 @@ fun ModeButton(
         contentPadding = PaddingValues(0.dp),
         onClick = { /*TODO*/ },
         colors = ButtonDefaults.buttonColors(
-            containerColor =
+        //    containerColor =
             //MaterialTheme.colorScheme.primary,
-            MaterialTheme.colorScheme.secondaryContainer
+          //  MaterialTheme.colorScheme.secondaryContainer
         )
     ) {
         Icon(
-            painter = painterResource(id = icon),
-            contentDescription = null,
+            imageVector = icon,
+            contentDescription = contentDescription,
             modifier = Modifier
                 .padding(start = 15.dp)
             )
