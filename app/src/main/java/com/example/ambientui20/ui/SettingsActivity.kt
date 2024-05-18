@@ -1,6 +1,5 @@
 package com.example.ambientui20.ui
 
-import android.graphics.Paint.Style
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -17,23 +16,30 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Slider
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.modifier.modifierLocalConsumer
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import project.cod3me.components.AmbTopBar
-import project.cod3me.components.AmbTopBarPrev
+import kotlin.math.roundToInt
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SettingsScreen() {
+fun SettingsScreen(
+    onNavigateToApp: () -> Unit
+) {
     Scaffold(
         topBar = {
             AmbTopBar(
@@ -44,19 +50,19 @@ fun SettingsScreen() {
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
-                    containerColor = MaterialTheme.colorScheme.primaryContainer
+                    containerColor = MaterialTheme.colorScheme.secondaryContainer
                 )
             )
         }
     ) { innerPadding ->
-        ScreenContent(Modifier.padding(innerPadding))
+        SettingsScreenContent(Modifier.padding(innerPadding))
 
     }
 }
 
 @Composable
-private fun ScreenContent(modifier: Modifier = Modifier){
-var sliderValue: String = 100.toString()
+private fun SettingsScreenContent(modifier: Modifier){
+var sliderValue by remember { mutableFloatStateOf(0f) }
     Row (
         modifier = Modifier
             .padding(top = 60.dp)
@@ -84,7 +90,8 @@ var sliderValue: String = 100.toString()
                     Divider()
                 }
                 Column {
-                    Row (
+                    Row (modifier = Modifier
+                        .fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                         verticalAlignment = Alignment.CenterVertically
                     ){
@@ -95,10 +102,10 @@ var sliderValue: String = 100.toString()
                                 .padding( top = 10.dp)
                         )
                         Text(
-                            text = sliderValue + "%",
-                            fontSize = 20.sp,
+                            text = sliderValue.toString(),
+                            fontSize = 25.sp,
                             modifier = Modifier
-                                .padding(start = 10.dp)
+                                .padding(start = 10.dp, top = 30.dp)
                                 )
                             }
                     Text(
@@ -107,6 +114,11 @@ var sliderValue: String = 100.toString()
                         fontWeight = FontWeight.Light,
                         modifier = Modifier
                             .padding(bottom= 10.dp)
+                    )
+                    Slider(value = sliderValue,
+                        onValueChange = {sliderValue = it.roundToInt().toFloat()},
+                        valueRange = 0f..100f,
+                        enabled = true
                     )
                     Divider()
 
@@ -171,7 +183,8 @@ var sliderValue: String = 100.toString()
 fun OptionWithSwitch(
     title: String = "You forgot text bruh",
     subtitle: String = "this too!!!"
-){
+)
+{var checked by remember{ mutableStateOf(false) }
     Column {
         Row (
             modifier = Modifier
@@ -188,7 +201,7 @@ fun OptionWithSwitch(
 
             )
             Switch(
-                checked = false, onCheckedChange = {}
+                checked = checked, onCheckedChange = {checked = it},
             )
         }
         Text(
@@ -208,5 +221,5 @@ fun OptionWithSwitch(
 @Preview(device = "spec:width=1080px,height=1920px,dpi=440,orientation=landscape", name = "Odin 2")
 @Composable
 fun SettingsScreenPrev(){
-    SettingsScreen()
+    //SettingsScreen()
 }

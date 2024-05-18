@@ -1,6 +1,5 @@
 package project.cod3me.components
 
-import android.graphics.Paint.Style
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
