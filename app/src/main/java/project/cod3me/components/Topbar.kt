@@ -1,5 +1,6 @@
 package project.cod3me.components
 
+import android.graphics.Paint.Style
 import androidx.compose.foundation.layout.RowScope
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
@@ -10,12 +11,14 @@ import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarColors
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.example.ambientui20.R
@@ -24,14 +27,19 @@ import com.example.ambientui20.R
 @Composable
 
 fun AmbTopBar(
+    modifier: Modifier = Modifier,
     title: String,
     navigationIcon: @Composable () -> Unit = {},
     actions: @Composable RowScope.() -> Unit = {},
     colors: TopAppBarColors = TopAppBarDefaults.topAppBarColors(),
-    scrollBehavior: TopAppBarScrollBehavior? = null
-) {
+    scrollBehavior: TopAppBarScrollBehavior? = null,
+
+    ) {
     TopAppBar(
-        title = { Text(text = title) },
+        title = { Text(
+            text = title,
+            style = MaterialTheme.typography.headlineLarge
+        ) },
         navigationIcon = navigationIcon,
         actions = actions,
         colors = colors,

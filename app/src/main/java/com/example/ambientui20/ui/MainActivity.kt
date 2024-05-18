@@ -1,10 +1,14 @@
-@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class)
+@file:OptIn(ExperimentalMaterial3Api::class, ExperimentalMaterial3Api::class,
+    ExperimentalMaterial3Api::class
+)
 
 package com.example.ambientui20.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -20,6 +24,7 @@ import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -36,14 +41,19 @@ import androidx.compose.material.icons.rounded.Search
 import androidx.compose.material.icons.rounded.Settings
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.ElevatedButton
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.ui.Alignment
+import androidx.compose.ui.graphics.Brush
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Wallpapers
 import androidx.compose.ui.unit.dp
@@ -71,6 +81,7 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App(){
     Scaffold(
@@ -78,12 +89,13 @@ fun App(){
             AmbTopBar(
                 title = stringResource(id = R.string.app_name),
                 actions = {
+
+                    AmbGradientButton()
+
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(imageVector = Icons.Rounded.PlayArrow, contentDescription = "Start")
                     }
-                    IconButton(onClick = { /*TODO*/ }) {
-                        Icon(imageVector = Icons.Rounded.Favorite, contentDescription = "Buy Pro")
-                    }
+
                     IconButton(onClick = { /*TODO*/ }) {
                         Icon(imageVector = Icons.Rounded.Info, contentDescription = "Info")
                     }
@@ -103,7 +115,7 @@ fun App(){
 
 
 @Composable
-fun ScreenContent(modifier: Modifier = Modifier) {
+private fun ScreenContent(modifier: Modifier = Modifier) {
     // Divide the screen into equal halves
     Row (
         modifier = Modifier
@@ -144,16 +156,16 @@ fun ScreenContent(modifier: Modifier = Modifier) {
 
         //Right half
 
-        Column(
+        Card(
             modifier = Modifier
                 .weight(1f)
                 .padding(
                     end = 20.dp,
-                    bottom = 40.dp,
-                    top = 40.dp
+                    bottom = 20.dp,
+                    top = 60.dp
                 )
                 .fillMaxHeight(),
-            horizontalAlignment = Alignment.CenterHorizontally
+            //horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
                 text = "This should be image X",
@@ -177,9 +189,9 @@ fun ModeButton(
     icon: ImageVector,
     contentDescription: String = ""
 ){
-    Button(
+    ElevatedButton(
         modifier = Modifier
-            .height(50.dp)
+            .height(70.dp)
             .width(400.dp)
             .padding(top = 0.dp),
 
@@ -188,7 +200,7 @@ fun ModeButton(
         contentPadding = PaddingValues(0.dp),
         onClick = { /*TODO*/ },
         colors = ButtonDefaults.buttonColors(
-        //    containerColor =
+            //containerColor =
             //MaterialTheme.colorScheme.primary,
           //  MaterialTheme.colorScheme.secondaryContainer
         )
@@ -214,7 +226,8 @@ fun ModeButton(
 
 @Preview(showBackground = true,
     device = "spec:width=1080px,height=1920px,dpi=440,orientation=landscape",
-    showSystemUi = true, name = "Odin 2", wallpaper = Wallpapers.GREEN_DOMINATED_EXAMPLE
+    showSystemUi = true, name = "Odin 2", wallpaper = Wallpapers.RED_DOMINATED_EXAMPLE,
+    group = "Odin"
 )
 @Composable
 fun AppPreview() {

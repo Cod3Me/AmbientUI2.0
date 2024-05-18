@@ -271,3 +271,73 @@ fun rememberSurroundSound(): ImageVector {
         }.build()
     }
 }
+
+
+@Composable
+fun rememberDiamond(): ImageVector {
+    return remember {
+        ImageVector.Builder(
+            name = "diamond",
+            defaultWidth = 40.0.dp,
+            defaultHeight = 40.0.dp,
+            viewportWidth = 40.0f,
+            viewportHeight = 40.0f
+        ).apply {
+            path(
+                fill = SolidColor(Color.Black),
+                fillAlpha = 1f,
+                stroke = null,
+                strokeAlpha = 1f,
+                strokeLineWidth = 1.0f,
+                strokeLineCap = StrokeCap.Butt,
+                strokeLineJoin = StrokeJoin.Miter,
+                strokeLineMiter = 1f,
+                pathFillType = PathFillType.NonZero
+            ) {
+                moveTo(20f, 33.417f)
+                quadToRelative(-0.583f, 0f, -1.104f, -0.25f)
+                quadToRelative(-0.521f, -0.25f, -0.896f, -0.709f)
+                lineTo(4.5f, 16.292f)
+                quadToRelative(-0.5f, -0.584f, -0.583f, -1.354f)
+                quadToRelative(-0.084f, -0.771f, 0.291f, -1.48f)
+                lineToRelative(3.417f, -6.916f)
+                quadToRelative(0.375f, -0.667f, 1f, -1.084f)
+                quadToRelative(0.625f, -0.416f, 1.375f, -0.416f)
+                horizontalLineToRelative(20f)
+                quadToRelative(0.75f, 0f, 1.375f, 0.416f)
+                quadToRelative(0.625f, 0.417f, 1f, 1.084f)
+                lineToRelative(3.458f, 6.916f)
+                quadToRelative(0.334f, 0.709f, 0.25f, 1.48f)
+                quadToRelative(-0.083f, 0.77f, -0.583f, 1.354f)
+                lineTo(22.042f, 32.458f)
+                quadToRelative(-0.417f, 0.459f, -0.938f, 0.709f)
+                quadToRelative(-0.521f, 0.25f, -1.104f, 0.25f)
+                close()
+                moveToRelative(-4.833f, -19.75f)
+                horizontalLineToRelative(9.666f)
+                lineToRelative(-3f, -5.959f)
+                horizontalLineToRelative(-3.666f)
+                close()
+                moveToRelative(3.541f, 15.541f)
+                verticalLineTo(16.292f)
+                horizontalLineTo(7.958f)
+                close()
+                moveToRelative(2.625f, 0f)
+                lineToRelative(10.709f, -12.916f)
+                horizontalLineTo(21.333f)
+                close()
+                moveToRelative(6.459f, -15.541f)
+                horizontalLineToRelative(5.083f)
+                lineToRelative(-3f, -5.959f)
+                horizontalLineToRelative(-5.083f)
+                close()
+                moveToRelative(-20.667f, 0f)
+                horizontalLineToRelative(5.125f)
+                lineToRelative(2.958f, -5.959f)
+                horizontalLineToRelative(-5.083f)
+                close()
+            }
+        }.build()
+    }
+}
+
