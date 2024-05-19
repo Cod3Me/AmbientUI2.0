@@ -25,6 +25,7 @@ import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
@@ -36,8 +37,11 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -49,11 +53,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.dialog
 import androidx.navigation.compose.rememberNavController
 import com.example.ambientui20.R
 import com.example.ambientui20.ui.theme.AmbientUI20Theme
 import project.cod3me.components.AmbGradientButton
 import project.cod3me.components.AmbTopBar
+
 
 
 class MainActivity : ComponentActivity() {
@@ -71,7 +77,8 @@ class MainActivity : ComponentActivity() {
                     val mainNavController = rememberNavController()
                     NavHost(navController = mainNavController, startDestination = "home"){
                         composable("settings"){ SettingsScreen(onNavigateToApp = {mainNavController.navigate("home")})}
-                        composable("home"){ App(onNavigateToSettings = {mainNavController.navigate("settings")})}
+                        composable("home"){ App(onNavigateToSettings = {mainNavController.navigate("settings")}, onNavigateToDialog = {mainNavController.navigate("help")})}
+                        dialog("help"){ AmbDialog(onNavigateToDialog = {mainNavController.navigate("help")})}
                     }
                 }
             }
@@ -83,7 +90,10 @@ class MainActivity : ComponentActivity() {
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun App(
-    onNavigateToSettings: () -> Unit
+    onNavigateToSettings: () -> Unit,
+    onNavigateToDialog: () -> Unit
+
+
 ){
     Scaffold(
         topBar = {
@@ -97,7 +107,7 @@ fun App(
                         Icon(imageVector = Icons.Rounded.PlayArrow, contentDescription = "Start")
                     }
 
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = { onNavigateToDialog()}) {
                         Icon(imageVector = Icons.Rounded.Info, contentDescription = "Info")
                     }
                     IconButton(onClick ={onNavigateToSettings()} ) {
@@ -225,6 +235,38 @@ fun ModeButton(
     }
 }
 
+@Composable
+fun AmbDialog(
+    onNavigateToDialog: () -> Unit
+){
+     var openDialog = remember { mutableStateOf(true) }
+     when {
+          openDialog.value -> {
+             AlertDialog(
+                 onDismissRequest = {
+                     openDialog.value = false
+                 },
+                 title = { Text(text = "Rant") },
+                 text = { Text(text = "istg idfk wth i'm doing as sh** i'm just effing going w the flow") },
+                 confirmButton = {
+                     TextButton(onClick = { openDialog.value = false }) {
+                         Text(
+                             text = "Hope"
+                         )
+
+                     }
+                 },
+                 dismissButton = {
+                     TextButton(onClick = { openDialog.value = false }) {
+                         Text(text = "Cope")
+
+                     }
+                 }
+             )
+         }
+     }
+}
+
 
 @Preview(showBackground = true,
     device = "spec:width=1080px,height=1920px,dpi=440,orientation=landscape",
@@ -234,6 +276,6 @@ fun ModeButton(
 @Composable
 fun AppPreview() {
     AmbientUI20Theme {
-        //App()
+        //AmbDialog()
     }
 }
