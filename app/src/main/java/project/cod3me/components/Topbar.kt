@@ -1,6 +1,8 @@
 package project.cod3me.components
 
 import androidx.compose.foundation.layout.RowScope
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.Favorite
 import androidx.compose.material.icons.rounded.Home
@@ -19,7 +21,9 @@ import androidx.compose.material3.TopAppBarScrollBehavior
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.dp
 import com.example.ambientui20.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,12 +41,19 @@ fun AmbTopBar(
     TopAppBar(
         title = { Text(
             text = title,
-            style = MaterialTheme.typography.headlineLarge
+            textAlign = TextAlign.Left,
+            style = MaterialTheme.typography.headlineMedium,
+            modifier = Modifier
+                .padding(0.dp)
+                .fillMaxWidth(),
+
         ) },
         navigationIcon = navigationIcon,
         actions = actions,
         colors = colors,
-        scrollBehavior = scrollBehavior
+        scrollBehavior = scrollBehavior,
+        modifier = Modifier
+            .fillMaxWidth(),
     )
 }
 
@@ -66,7 +77,7 @@ fun AmbTopBarPrev(){
             IconButton(onClick = { /*TODO*/ }) {
                 Icon(imageVector = Icons.Rounded.Favorite, contentDescription = "Buy Pro")
             }
-            IconButton(onClick = { /*TODO*/ }) { 
+            IconButton(onClick = { /*TODO*/ }) {
                 Icon(imageVector = Icons.Rounded.Info, contentDescription = "Info")
             }
             IconButton(onClick = { /*TODO*/ }) {

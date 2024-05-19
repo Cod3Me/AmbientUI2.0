@@ -25,6 +25,7 @@ import androidx.compose.material.icons.rounded.Info
 import androidx.compose.material.icons.rounded.LocationOn
 import androidx.compose.material.icons.rounded.PlayArrow
 import androidx.compose.material.icons.rounded.Settings
+import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.ElevatedButton
@@ -161,6 +162,7 @@ private fun ScreenContent(modifier: Modifier = Modifier) {
                 .weight(1f)
                 .padding(
                     end = 20.dp,
+                    start = 20.dp,
                     bottom = 20.dp,
                     top = 60.dp
                 )
@@ -189,7 +191,7 @@ fun ModeButton(
     icon: ImageVector,
     contentDescription: String = ""
 ){
-    ElevatedButton(
+    Button(
         modifier = Modifier
             .height(70.dp)
             .width(400.dp)
