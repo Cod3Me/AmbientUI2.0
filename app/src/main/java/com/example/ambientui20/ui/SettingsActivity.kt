@@ -50,13 +50,14 @@ fun SettingsScreen(
             AmbTopBar(
                 title = "Settings",
                 navigationIcon = {
-                    IconButton(onClick = { /*TODO*/ }) {
+                    IconButton(onClick = {onNavigateToApp()}) {
                         Icon(imageVector = Icons.Rounded.ArrowBack, contentDescription = "back")
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(
                     containerColor = MaterialTheme.colorScheme.secondaryContainer
-                )
+                ),
+
             )
         }
     ) { innerPadding ->

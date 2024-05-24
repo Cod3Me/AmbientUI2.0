@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
                     //App()
                     val mainNavController = rememberNavController()
                     NavHost(navController = mainNavController, startDestination = "home"){
-                        composable("settings"){ SettingsScreen(onNavigateToApp = {mainNavController.navigate("home")})}
+                        composable("settings"){ SettingsScreen(onNavigateToApp = {mainNavController.popBackStack()})}
                         composable("home"){ App(onNavigateToSettings = {mainNavController.navigate("settings")}, onNavigateToDialog = {mainNavController.navigate("help")})}
                         dialog("help"){ AmbDialog(onDismissRequest = {mainNavController.popBackStack()})}
                     }
