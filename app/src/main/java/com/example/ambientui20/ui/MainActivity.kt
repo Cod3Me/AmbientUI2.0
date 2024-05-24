@@ -78,7 +78,7 @@ class MainActivity : ComponentActivity() {
                     NavHost(navController = mainNavController, startDestination = "home"){
                         composable("settings"){ SettingsScreen(onNavigateToApp = {mainNavController.navigate("home")})}
                         composable("home"){ App(onNavigateToSettings = {mainNavController.navigate("settings")}, onNavigateToDialog = {mainNavController.navigate("help")})}
-                        dialog("help"){ AmbDialog(onNavigateToDialog = {mainNavController.navigate("help")})}
+                        dialog("help"){ AmbDialog(onDismissRequest = {mainNavController.popBackStack()})}
                     }
                 }
             }
@@ -107,7 +107,7 @@ fun App(
                         Icon(imageVector = Icons.Rounded.PlayArrow, contentDescription = "Start")
                     }
 
-                    IconButton(onClick = { onNavigateToDialog()}) {
+                    IconButton(onClick = {onNavigateToDialog()}) {
                         Icon(imageVector = Icons.Rounded.Info, contentDescription = "Info")
                     }
                     IconButton(onClick ={onNavigateToSettings()} ) {
@@ -235,36 +235,30 @@ fun ModeButton(
     }
 }
 
+
 @Composable
 fun AmbDialog(
-    onNavigateToDialog: () -> Unit
-){
-     var openDialog = remember { mutableStateOf(true) }
-     when {
-          openDialog.value -> {
-             AlertDialog(
-                 onDismissRequest = {
-                     openDialog.value = false
-                 },
-                 title = { Text(text = "Rant") },
-                 text = { Text(text = "istg idfk wth i'm doing as sh** i'm just effing going w the flow") },
-                 confirmButton = {
-                     TextButton(onClick = { openDialog.value = false }) {
-                         Text(
-                             text = "Hope"
-                         )
+onDismissRequest: () -> Unit
+){ AlertDialog(
+    onDismissRequest = {onDismissRequest()},
+    title = { Text(text = "Rant") },
+    text = { Text(text = "istg idfk wth i'm doing as sh** i'm just effing going w the flow") },
+    confirmButton = {
+        TextButton(onClick = {onDismissRequest()}) {
+            Text(
+                text = "Hope"
+            )
 
-                     }
-                 },
-                 dismissButton = {
-                     TextButton(onClick = { openDialog.value = false }) {
-                         Text(text = "Cope")
-
+        }
+                    },
+    dismissButton = {
+        TextButton(onClick = {onDismissRequest()}) {
+            Text(text = "Cope")
                      }
                  }
              )
-         }
-     }
+
+
 }
 
 
